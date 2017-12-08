@@ -19,17 +19,14 @@ class Chunk():
         self.dst = dst
         self.srcs = srcs
 
-    def add(self, m):
+    def add_morph(self, m):
         self.morphs.append(m)
 
-    def add_srcs(self, i):
+    def add_src(self, i):
         self.srcs.append(i)
 
     def __repr__(self):
-        chunk_words = ""
-        for m in self.morphs:
-            chunk_words += m.surface
-        return "str:{}, dst:{}, srcs[{}]".format(chunk_words,
+        return "str:{}, dst:{}, srcs[{}]".format("".join([m.surface for m in self.morphs]),
                                                  self.dst,
                                                  ", ".join([str(i) for i in self.srcs]))
 
@@ -47,7 +44,7 @@ with open("output/neko.txt.cabocha") as f:
                 for i, chunk in enumerate(sentence):
                     if chunk.dst == -1:
                         continue
-                    sentence[chunk.dst].add_srcs(i)
+                    sentence[chunk.dst].add_src(i)
                 doc.append(sentence)
                 sentence = []
         else:
@@ -56,6 +53,6 @@ with open("output/neko.txt.cabocha") as f:
                       cabocha_output[6],
                       cabocha_output[0],
                       cabocha_output[1])
-            sentence[-1].add(m)
+            sentence[-1].add_morph(m)
 
 print(doc[7])
