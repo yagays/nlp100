@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import pickle
+
 
 class Morph():
     def __init__(self, surface="", base="", pos="", pos1=""):
@@ -56,3 +58,6 @@ with open("output/neko.txt.cabocha") as f:
             sentence[-1].add_morph(m)
 
 print(doc[7])
+
+with open("output/neko.txt.cabocha.pkl", "wb") as f:
+    pickle.dump(doc, f)
